@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Level 3 - calculator</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="calculator">
+        <div class="calculator-label">Calculator</div>
+        <div class="calculator-view"></div>
+        <div class="calculator-result"></div>
+        <div class="calculator-grid">
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-7" value="7"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-8" value="8"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-9" value="9"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-div" value="/"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-abs" value="±""></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-4" value="4"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-5" value="5"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-6" value="6"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-mul" value="x"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-square-2" value="√"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-1" value="1"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-2" value="2"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-3" value="3"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-sub" value="-"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-percent" value="%"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-0" value="0"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-dot" value="."></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-C" value="C"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-plus" value="+"></input>
+          <input type="button" onclick="onClickKeyboard(this.value)" id="btn-equal" value="="></input>
+        </div>
+      </div>
+      <div class="backlog">
+        <div class="backlog-label">Backlog</div>
+        <ul id="backlog-list"></ul>
+        <button type="button" onclick="resetBacklogs()" >Remove backlog</button>
+      </div>
+    </div>
+    <script src="./script.js" defer></script>
+  </body>
+</html>

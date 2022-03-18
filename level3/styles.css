@@ -1,0 +1,100 @@
+body {
+  background-color: aliceblue;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator {
+  background-color: antiquewhite;
+  padding: 20px;
+  border-radius: 4px;
+  width: 320px;
+  font-size: medium;
+  font-weight: 700;
+}
+
+.calculator-view {
+  background-color: aliceblue;
+  border-radius: inherit;
+  padding: 20px;
+  text-align: end;
+}
+
+.calculator-result {
+  background-color: aliceblue;
+  border-radius: inherit;
+  border: 1px solid lavender;
+  padding: 20px;
+  text-align: end;
+}
+
+.calculator-label {
+  padding-bottom: 10px;
+}
+
+.calculator-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.calculator-grid input {
+  width: 20%;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  transition: 0.3s ease-in all;
+  font-weight: 700;
+}
+
+.calculator-grid input:hover {
+  opacity: 0.8;
+}
+
+.calculator-grid input:focus {
+  background-color: cadetblue;
+}
+
+.backlog {
+  height: 470px;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  width: 400px;
+}
+
+.backlog-label {
+  font-weight: 700;
+  text-align: center;
+}
+
+.backlog ul {
+  padding: 0;
+}
+
+.backlog ul li {
+  display: flex;
+  flex-direction: column;
+  background-color: beige;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.backlog button {
+  margin: 10px;
+}
