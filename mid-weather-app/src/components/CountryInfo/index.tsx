@@ -1,16 +1,16 @@
-import React from "react";
+import { useWeather } from "../../context/MainContext";
 
 export default function CountryInfo() {
+  const { state } = useWeather();
   return (
     <section className="currentCountryInfo">
-      <img src="" alt="Country Flag" id="flag" />
       <p className="location">
-        <span id="name"></span>
-        <span id="country"></span>
+        <span id="name">{state.currentCountryInfo.name}</span>
+        {/* <span id="country">{state.currentCountryInfo.}</span> */}
       </p>
       <p className="coordinates">
-        <span id="lat"></span>
-        <span id="lon"></span>
+        <span id="lat">{state.currentCountryInfo.lat}</span>
+        <span id="lon">{state.currentCountryInfo.lon}</span>
       </p>
     </section>
   );

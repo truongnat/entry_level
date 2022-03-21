@@ -6,13 +6,6 @@
   box-sizing: border-box;
 }
 
-#flag,
-#icon,
-#weatherCurrent {
-  /*Just at first load*/
-  visibility: hidden;
-}
-
 .weatherDescription {
   text-transform: capitalize;
 }
