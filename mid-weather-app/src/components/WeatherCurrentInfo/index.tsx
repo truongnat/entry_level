@@ -1,32 +1,28 @@
-import { useWeather } from "../../context/MainContext";
+import { useWP } from '../../context/MainContext';
 
 export function WeatherCurrentInfo() {
-  const { state } = useWeather();
+  const { weatherInfo } = useWP();
   return (
-    <section id="weatherCurrent">
-      <div className="currentMain">
-        <span id="temp">{state.currentCountryInfo.temp}</span>
-        {state.currentCountryInfo.icon && (
-          <img
-            src={state.currentCountryInfo.icon}
-            alt="Weather Icon"
-            id="icon"
-          />
+    <section id='weatherCurrent'>
+      <div className='currentMain'>
+        <span id='temp'>{weatherInfo.temp}</span>
+        {weatherInfo.icon && (
+          <img src={weatherInfo.icon} alt='Weather Icon' id='icon' />
         )}
 
-        <span className="weatherDescription" id="description">
-          {state.currentCountryInfo.description}
+        <span className='weatherDescription' id='description'>
+          {weatherInfo.description}
         </span>
       </div>
-      <div className="currentData">
+      <div className='currentData'>
         <p>
-          <span id="feels_like">{state.currentCountryInfo.feels_like}</span>
+          <span id='feels_like'>{weatherInfo.feels_like}</span>
         </p>
         <p>
-          <span id="visibility">{state.currentCountryInfo.visibility}</span>
+          <span id='visibility'>{weatherInfo.visibility}</span>
         </p>
         <p>
-          <span id="humidity">{state.currentCountryInfo.humidity}</span>
+          <span id='humidity'>{weatherInfo.humidity}</span>
         </p>
       </div>
     </section>

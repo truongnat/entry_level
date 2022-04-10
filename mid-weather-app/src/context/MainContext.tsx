@@ -1,107 +1,125 @@
-import { createContext, useContext, useState } from "react";
-import { API_KEY, BASE_URL } from "../config";
-import { ICurrentCountryInfo, IWeatherContext, IWeatherData } from "./types";
+import { createContext, useContext, useState, FC, ReactNode } from 'react';
+import { API_KEY } from '../config';
+import api from '../config/api';
+import {
+  ICurrentCountryInfo,
+  IFormSearch,
+  IWeatherContext,
+  UnitLetter,
+  Units,
+} from './types';
 
-export const initial = {
+const initFormSearch = {
+  loading: false,
   apiKey: API_KEY,
-  units: "metric",
-  unitLetter: "°C",
-  country: "",
+  unit: 'metric',
+  unitLetter: '°C',
+  country: '',
   lastLat: 0,
   lastLon: 0,
-  currentCountryInfo: {
-    name: "",
-    temp: "",
-    visibility: "",
-    description: "",
-    feels_like: "",
-    humidity: "",
-    icon: "",
-    lat: "",
-    lon: "",
-  } as ICurrentCountryInfo,
-} as IWeatherData;
+} as IFormSearch;
 
-export const WeatherContext = createContext<IWeatherData | {}>({});
+const initCountryInfo = {
+  name: '',
+  temp: '',
+  visibility: '',
+  description: '',
+  feels_like: '',
+  humidity: '',
+  icon: '',
+  lat: '',
+  lon: '',
+} as ICurrentCountryInfo;
 
-export const WeatherProvider = (props: { children: Element | any }) => {
-  const value = useCtxProvider();
-  return (
-    <WeatherContext.Provider value={value}>
-      {props.children}
-    </WeatherContext.Provider>
-  );
-};
+export const WContext = createContext<IWeatherContext | null>(null);
 
-export function useWeather() {
-  return useContext(WeatherContext) as IWeatherContext;
-}
+export const WProvider: FC<ReactNode> = ({ children }) => {
+  const [formSearch, setFormSearch] = useState<IFormSearch>({
+    ...initFormSearch,
+  });
 
-export function useCtxProvider(): IWeatherContext {
-  const [state, setState] = useState<IWeatherData>({ ...initial });
+  const [weatherInfo, setWeatherInfo] = useState<ICurrentCountryInfo>({
+    ...initCountryInfo,
+  });
 
-  function _onChangeField<T>(field: keyof IWeatherData, value: T) {
-    setState({
-      ...state,
-      [field]: value,
+  function _changeCountry(val: string) {
+    setFormSearch({
+      ...formSearch,
+      country: val,
     });
   }
 
-  async function _fetchCurrentWeather() {
+  function _toggleUnit() {
+    const unitLetter =
+      formSearch.unit === Units.metric ? UnitLetter.F : UnitLetter.C;
+
+    const unit =
+      formSearch.unit === Units.metric ? Units.imperial : Units.metric;
+
+    setFormSearch({
+      ...formSearch,
+      unit,
+      unitLetter,
+    });
+
+    _fetchCurrentWeather(unit, unitLetter).then((res) => {
+      setWeatherInfo({
+        ...weatherInfo,
+        ...res,
+      });
+    });
+  }
+
+  async function _fetchCurrentWeather(unit: string, unitLetter: string) {
     try {
-      let fetcher = await fetch(
-        `${BASE_URL}q=${state.country}&units=${state.units}&appid=${state.apiKey}`
-      );
+      const response = await api._apiWeather._getCurrentWeather({
+        country: formSearch.country,
+        units: unit,
+        appid: formSearch.apiKey,
+      });
+      let iconId = response.weather[0].icon;
 
-      if (fetcher.ok) {
-        const weatherJson = await fetcher.json();
-        console.log("show whe  : ", weatherJson);
-
-        let iconId = weatherJson.weather[0].icon;
-        _onChangeField<ICurrentCountryInfo>("currentCountryInfo", {
-          name: weatherJson.name,
-          description: weatherJson.weather[0].description,
-          visibility: "Visibility: " + weatherJson.visibility / 1000 + "Km",
-          temp: weatherJson.main.temp + state.unitLetter,
-          feels_like:
-            "Feels Like: " + weatherJson.main.feels_like + state.unitLetter,
-          humidity: "Humidity: " + weatherJson.main.humidity + "%",
-          lat: weatherJson.coord.lat + ", ",
-          lon: weatherJson.coord.lon,
-          icon: `https://openweathermap.org/img/wn/${iconId}@4x.png`,
-        });
-        await _fetchInfoByCode(weatherJson.sys.country);
-      } else {
-        // handle error
-      }
+      const newCountryInfo = {
+        name: response.name,
+        description: response.weather[0].description,
+        visibility: 'Visibility: ' + response.visibility / 1000 + 'Km',
+        temp: response.main.temp + unitLetter,
+        feels_like: 'Feels Like: ' + response.main.feels_like + unitLetter,
+        humidity: 'Humidity: ' + response.main.humidity + '%',
+        lat: response.coord.lat + ', ',
+        lon: response.coord.lon,
+        icon: api._apiWeather._getIconWeather(iconId),
+      };
+      return newCountryInfo;
     } catch (e) {
-      console.log("logging e :", e);
-
       // show toast
     }
   }
 
-  async function _fetchInfoByCode(code: string) {
-    try {
-      let fetcher = await fetch(
-        `https://restcountries.com/v3.1/alpha/${code}`
-      );
-
-      if (fetcher.ok) {
-        let countryJson = await fetcher.json();
-
-        console.log("show info by code : ", countryJson);
-      } else {
-        // handle else
-      }
-    } catch (e) {
-      console.log("_fetchInfoByCode e:", e);
-    }
+  async function _handleSearch() {
+    _fetchCurrentWeather(formSearch.unit, formSearch.unitLetter).then((res) => {
+      setWeatherInfo({
+        ...weatherInfo,
+        ...res,
+      });
+    });
   }
 
-  return {
-    _onChangeField,
-    state,
-    _fetchCurrentWeather,
-  };
+  return (
+    <WContext.Provider
+      value={{
+        formSearch,
+        weatherInfo,
+        _toggleUnit,
+        _handleSearch,
+        _changeCountry,
+      }}
+    >
+      {children}
+    </WContext.Provider>
+  );
+};
+
+export function useWP() {
+  return useContext(WContext) as IWeatherContext;
 }

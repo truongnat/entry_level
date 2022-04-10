@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Tamil:wght@300&display=swap');
+
 * {
-  font-family: spartan;
+  font-family: 'Anek Tamil', sans-serif;
   font-size: large;
   padding: 0;
   margin: 0;
@@ -342,10 +344,10 @@ body {
 
   display: grid;
   grid-template:
-    "input" max-content
-    "country" max-content
-    "weather" minmax(max-content, auto)
-    "forecast" minmax(max-content, 50%)
+    'input' max-content
+    'country' max-content
+    'weather' minmax(max-content, auto)
+    'forecast' minmax(max-content, 50%)
     / 100%;
   align-content: space-between;
 
@@ -370,10 +372,10 @@ body {
   grid-area: forecast;
   display: grid;
   grid-template:
-    ".   day0   ." max-content
-    "day1 day2 day3" max-content
-    "day4 day5 day6" max-content
-    ".   day7   ." max-content
+    '.   day0   .' max-content
+    'day1 day2 day3' max-content
+    'day4 day5 day6' max-content
+    '.   day7   .' max-content
     / max-content max-content max-content;
 
   justify-content: space-evenly;
@@ -464,10 +466,10 @@ body {
 
     display: grid;
     grid-template:
-      "input input" max-content
-      "country forecast" max-content
-      "weather forecast" minmax(max-content, auto)
-      ". ." minmax(max-content, auto)
+      'input input' max-content
+      'country forecast' max-content
+      'weather forecast' minmax(max-content, auto)
+      '. .' minmax(max-content, auto)
       / 1fr 1fr;
     align-content: space-between;
   }

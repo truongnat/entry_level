@@ -1,16 +1,16 @@
-import { useWeather } from "../../context/MainContext";
+import { useWP } from '../../context/MainContext';
 
 export default function CountryInfo() {
-  const { state } = useWeather();
+  const { weatherInfo } = useWP();
   return (
-    <section className="currentCountryInfo">
-      <p className="location">
-        <span id="name">{state.currentCountryInfo.name}</span>
-        {/* <span id="country">{state.currentCountryInfo.}</span> */}
+    <section className='currentCountryInfo'>
+      <p className='location'>
+        <span id='name'>{weatherInfo.name}</span>
+        {/* <span id="country">{weatherInfo.}</span> */}
       </p>
-      <p className="coordinates">
-        <span id="lat">{state.currentCountryInfo.lat}</span>
-        <span id="lon">{state.currentCountryInfo.lon}</span>
+      <p className='coordinates'>
+        <span id='lat'>{weatherInfo.lat}</span>
+        <span id='lon'>{weatherInfo.lon}</span>
       </p>
     </section>
   );

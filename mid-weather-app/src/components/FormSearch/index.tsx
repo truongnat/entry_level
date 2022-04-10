@@ -1,41 +1,32 @@
-import { useWeather } from "../../context/MainContext";
-import { UnitLetter } from "../../context/types";
+import React from 'react';
+import { useWP } from '../../context/MainContext';
 
 export default function FormSearch() {
-  const { state, _onChangeField, _fetchCurrentWeather } = useWeather();
-
-  function toggleUnit() {
-    if (state.unitLetter === "°C") {
-      _onChangeField("unitLetter", UnitLetter.F);
-    } else {
-      _onChangeField("unitLetter", UnitLetter.C);
-    }
-  }
+  const { formSearch, _changeCountry, _toggleUnit, _handleSearch } = useWP();
 
   return (
-    <section className="inputSection">
-      <div className="searchBar">
+    <section className='inputSection'>
+      <div className='searchBar'>
         <input
-          value={state.country}
-          className="inputField"
-          onChange={(e) => {
-            _onChangeField("country", e.target.value);
+          value={formSearch.country}
+          className='inputField'
+          onChange={(e: React.FormEvent<HTMLInputElement>) => {
+            _changeCountry(e.currentTarget.value);
           }}
-          id="userInputField"
-          type="text"
+          type='text'
         />
-        <button className="unitsBtn metric clickable" onClick={toggleUnit}>
-          {state.unitLetter}
+        <button className='unitsBtn metric clickable' onClick={_toggleUnit}>
+          {formSearch.unitLetter}
         </button>
         <button
-          className="inputBtn metric clickable"
-          type="button"
-          onClick={_fetchCurrentWeather}
+          className='inputBtn metric clickable'
+          type='button'
+          onClick={_handleSearch}
         >
           Go
         </button>
       </div>
-      <ul id="suggestions" className="hidden suggestions"></ul>
+      <ul className='hidden suggestions'></ul>
     </section>
   );
 }
